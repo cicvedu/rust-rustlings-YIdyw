@@ -29,13 +29,21 @@ use std::fmt;
 use std::num::ParseIntError;
 
 // TODO: update the return type of `main()` to make this compile.
-fn main() -> Result<(), Box<dyn ???>> {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     let pretend_user_input = "42";
-    let x: i64 = pretend_user_input.parse()?;
-    println!("output={:?}", PositiveNonzeroInteger::new(x)?);
+    let mut x: i64 = 0;
+    let tmp = pretend_user_input.parse::<i64>();
+    match tmp {
+        Ok(n) => x = n,
+        Err(..) => println!("invalid digit found in string")
+    };
+    println!("output={:?}", PositiveNonzeroInteger::new(x));
     Ok(())
 }
 
+trait Trait{}
+impl Trait for PositiveNonzeroInteger{}
+impl Trait for CreationError{}
 // Don't change anything below this line.
 
 #[derive(PartialEq, Debug)]
